@@ -36,8 +36,11 @@ class ArchivePopOverViewController: UIViewController {
     @IBOutlet weak var plateType: UISegmentedControl!
     @IBOutlet weak var plateStatus: UISegmentedControl!
     @IBOutlet weak var containerView: UIView!
+    @IBOutlet weak var contentView: UIView!
+    @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var okButton: UIButton!
+    @IBOutlet weak var scrollViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var containerViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var itemsDetailsHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var additionalInformationVerticalSpacingConstraint: NSLayoutConstraint!
@@ -117,6 +120,7 @@ class ArchivePopOverViewController: UIViewController {
     func adjusTheFrames() {
         let parentVC = MainViewController()
         containerViewVerticalSpacingConstraint.constant = parentVC.topBarHeight
+        scrollView.contentSize = CGSize(width: self.view.frame.size.width - (2 * 16), height: 360.0)
     }
     func resetContent() {
         nameTextField.text = ""
@@ -363,24 +367,20 @@ extension ArchivePopOverViewController : UITextFieldDelegate {
         default:
             break
         }
+        UIView.animateWithDuration(0.5) {
+            self.containerViewHeightConstraint.constant += 100.0
+            self.scrollViewHeightConstraint.constant += 100.0
+            self.view.layoutIfNeeded()
+        }
         
         okButton.enabled = plateState ? (nameTextField.text?.characters.count > 4 && libraryNameTextField.text?.characters.count > 4 &&  projectNameTextField.text?.characters.count > 4 && dateTextField.text != "" && freezerLocationTextField.text != "") : (nameTextField.text?.characters.count > 4 && dateTextField.text != "" && freezerLocationTextField.text != "")
     }
     func textFieldDidBeginEditing(textField: UITextField) {
-        if textField == detailedInformationTextField && plateState{
-            UIView.animateWithDuration(1.0, animations: {
-                switch self.view.frame.size.height {
-                case 480:
-                    self.containerViewVerticalSpacingConstraint.constant = -110
-                case 568:
-                    self.containerViewVerticalSpacingConstraint.constant = -50
-                default:
-                    self.containerViewVerticalSpacingConstraint.constant = self.view.frame.size.height/48
-                }
-                self.view.layoutIfNeeded()
-            })
+        UIView.animateWithDuration(0.5) {
+            self.containerViewHeightConstraint.constant -= 100.0
+            self.scrollViewHeightConstraint.constant -= 100.0
+            self.view.layoutIfNeeded()
         }
-        okButton.enabled = plateState ? (nameTextField.text?.characters.count > 4 && libraryNameTextField.text?.characters.count > 4 &&  projectNameTextField.text?.characters.count > 4 && dateTextField.text != "" && freezerLocationTextField.text != "") : (nameTextField.text?.characters.count > 4 && dateTextField.text != "" && freezerLocationTextField.text != "")
     }
     
     func checkTextFieldLength(textField: UITextField) {
