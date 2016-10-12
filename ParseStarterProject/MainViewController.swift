@@ -330,6 +330,7 @@ class MainViewController: UIViewController {
                 destinationVC.scannedItems = self.scannedItems
                 destinationVC.deviceModeIndex = self.deviceModeIndex
                 destinationVC.curentUser = self.curentUser
+                destinationVC.delegate = self
             }
         } else if segue.identifier == "ShowPlateScanSuccessPopover" {
             if let destinationVC = segue.destinationViewController as? PlateScanSuccessPopOverVC {
@@ -354,5 +355,10 @@ extension MainViewController : ArchivePopOverViewControllerDelegate {
     func archiveItemReturned(value: ScannedItem) {
         self.scannedItem = value
         self.scannedItems.append(self.scannedItem)
+    }
+}
+extension MainViewController: ListViewControllerDelegate {
+    func listScannedItemsReturned(value: [ScannedItem]) {
+        self.scannedItems = value 
     }
 }

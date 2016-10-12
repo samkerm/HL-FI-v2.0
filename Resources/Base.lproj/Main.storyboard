@@ -535,6 +535,7 @@
                         <outlet property="freezerLocationVerticalSpacingConstraint" destination="f3H-9z-hUX" id="BcY-xc-eo7"/>
                         <outlet property="headerLabel" destination="edh-eY-TS0" id="sps-R9-Qhs"/>
                         <outlet property="itemType" destination="kNa-SR-SDw" id="gaL-CP-hMA"/>
+                        <outlet property="itemsDetailsHeightConstraint" destination="7bw-LE-X4p" id="KpS-xa-aH2"/>
                         <outlet property="libraryNameTextField" destination="Hri-nr-672" id="HKT-8i-haj"/>
                         <outlet property="nameTextField" destination="8YH-NX-DLI" id="g6L-oL-QjS"/>
                         <outlet property="okButton" destination="sEh-XY-ERo" id="9yq-dF-ncP"/>
@@ -1027,7 +1028,7 @@
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="KyS-pK-g6M">
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" id="KyS-pK-g6M">
                                             <frame key="frameInset" minX="316" minY="11" width="44" height="21"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>

@@ -69,12 +69,18 @@ class DetailsOfItemTableViewController: UITableViewController {
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return titleArray.count
+        return contentArray.count
     }
 
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
+        var cell = UITableViewCell()
+        if indexPath.row == contentArray.count - 1 {
+            cell = UITableViewCell(style: .Subtitle, reuseIdentifier: "Cell")
+            cell.detailTextLabel?.numberOfLines = 0
+        } else {
+            cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
+        }
         cell.textLabel?.text = titleArray[indexPath.row]
         cell.textLabel?.textColor = .whiteColor()
         cell.detailTextLabel?.text = String(contentArray[indexPath.row]) == "" ? "--" : String(contentArray[indexPath.row])
@@ -88,17 +94,19 @@ class DetailsOfItemTableViewController: UITableViewController {
         contentArray.removeAll()
     }
 
-//    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-//        let deviceScale = Int(view.bounds.size.width / 320 * 88)
-//        var charactersCount = 0
-//        if contentArray[indexPath.row] is String {
-//            let string = contentArray[indexPath.row] as! String
-//            charactersCount = string.characters.count
-//        }
-//        let scale = CGFloat(charactersCount / deviceScale)
-//        return (scale * 44) + 44
-//    }
-    
+   override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        let subtitleWidth = tableView.frame.size.width - 60
+        if indexPath.row == contentArray.count - 1 {
+            let string = contentArray[indexPath.row] as! NSString
+            let atributes = [NSFontAttributeName : UIFont.systemFontOfSize(12.0)]
+            let widthSize = string.sizeWithAttributes(atributes).width
+            let heightSize = string.sizeWithAttributes(atributes).height
+            let rowScale = widthSize / subtitleWidth
+            return rowScale * heightSize + 44
+        } else {
+            return 44
+        }
+    }
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {

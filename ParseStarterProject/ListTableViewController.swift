@@ -10,7 +10,13 @@ import UIKit
 
 class ListTableViewController: UITableViewController {
 
-    var scannedItems = [ScannedItem]()
+    var scannedItems = [ScannedItem]() {
+        didSet {
+            if let listVC = self.parentViewController as? ListViewController {
+                listVC.updateScannedItemsGlobally(self.scannedItems)
+            }
+        }
+    }
     var deviceModeIndex : Int!
     var selectedRow = 0
     let parseHandler = ParseBackendHandler()
@@ -83,7 +89,9 @@ class ListTableViewController: UITableViewController {
         if editingStyle == .Delete {
             scannedItems.removeAtIndex(indexPath.row)
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-//            self.updateLeftBarButtonItem()
+            if scannedItems.count == 0 {
+                self.parentViewController?.dismissViewControllerAnimated(true, completion: nil)
+            }
         }
     }
     

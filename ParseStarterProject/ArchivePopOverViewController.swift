@@ -144,6 +144,8 @@ class ArchivePopOverViewController: UIViewController {
             self.nameTextField.placeholder = "Plate Name > 4 characters"
             self.containerViewHeightConstraint.constant = 430
             self.itemsDetailsHeightConstraint.constant = 360
+            self.scrollViewHeightConstraint.constant = 360
+            self.scrollView.contentSize.height = 360
             self.freezerLocationVerticalSpacingConstraint.constant = 75
             self.view.layoutIfNeeded()
         }
@@ -159,6 +161,8 @@ class ArchivePopOverViewController: UIViewController {
             self.containerViewHeightConstraint.constant = 320
             self.itemsDetailsHeightConstraint.constant = 250
             self.freezerLocationVerticalSpacingConstraint.constant = 5
+            self.scrollViewHeightConstraint.constant = 250
+            self.scrollView.contentSize.height = 250
             self.view.layoutIfNeeded()
             
         }
@@ -367,19 +371,23 @@ extension ArchivePopOverViewController : UITextFieldDelegate {
         default:
             break
         }
-        UIView.animateWithDuration(0.5) {
-            self.containerViewHeightConstraint.constant += 100.0
-            self.scrollViewHeightConstraint.constant += 100.0
-            self.view.layoutIfNeeded()
+        if plateState {
+            UIView.animateWithDuration(0.5) {
+                self.containerViewHeightConstraint.constant += 100.0
+                self.scrollViewHeightConstraint.constant += 100.0
+                self.view.layoutIfNeeded()
+            }
         }
         
         okButton.enabled = plateState ? (nameTextField.text?.characters.count > 4 && libraryNameTextField.text?.characters.count > 4 &&  projectNameTextField.text?.characters.count > 4 && dateTextField.text != "" && freezerLocationTextField.text != "") : (nameTextField.text?.characters.count > 4 && dateTextField.text != "" && freezerLocationTextField.text != "")
     }
     func textFieldDidBeginEditing(textField: UITextField) {
-        UIView.animateWithDuration(0.5) {
-            self.containerViewHeightConstraint.constant -= 100.0
-            self.scrollViewHeightConstraint.constant -= 100.0
-            self.view.layoutIfNeeded()
+        if plateState {
+            UIView.animateWithDuration(0.5) {
+                self.containerViewHeightConstraint.constant -= 100.0
+                self.scrollViewHeightConstraint.constant -= 100.0
+                self.view.layoutIfNeeded()
+            }
         }
     }
     
@@ -388,7 +396,7 @@ extension ArchivePopOverViewController : UITextFieldDelegate {
             shake(textField)
             textField.textColor = .redColor()
             let tempStoredText = textField.text
-            textField.text = "\(tempStoredText!) is less than 5 characters"
+            textField.text = "\"\(tempStoredText!)\" is less than 5 characters"
             pause(seconds: 2.0, completion: {
                 textField.textColor = .blackColor()
                 textField.text = tempStoredText

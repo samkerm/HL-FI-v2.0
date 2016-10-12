@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol ListViewControllerDelegate {
+    func listScannedItemsReturned(value: [ScannedItem])
+}
+
 class ListViewController: UIViewController {
 
     var topBarHeight = CGFloat()
@@ -21,7 +25,7 @@ class ListViewController: UIViewController {
     var deviceModeIndex : Int!
     var selectedRow = 0
     let parseHandler = ParseBackendHandler()
-
+    var delegate : ListViewControllerDelegate!
     
     var comingFromMainVC = false
     
@@ -75,6 +79,11 @@ class ListViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func updateScannedItemsGlobally(scannedItems: [ScannedItem]) {
+        self.scannedItems = scannedItems
+        delegate.listScannedItemsReturned(scannedItems)
     }
     
 //    required init?(coder aDecoder: NSCoder) {
