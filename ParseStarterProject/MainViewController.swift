@@ -163,7 +163,7 @@ class MainViewController: UIViewController {
     func toggleSideMenu() {
         let isOpen = menuViewController.view.frame.origin.x == 0.0 ? true : false
         let targetProgress: CGFloat = isOpen ? 0.0: 1.0
-
+        
         UIView.animateWithDuration(animationTime, animations: {
             self.setToPercent(targetProgress)
             }, completion: { _ in
@@ -177,6 +177,9 @@ class MainViewController: UIViewController {
         scannerViewController.view.alpha = CGFloat(max(0.2, 1 - percent))
         let menuButton = topbarViewController.menuButton
         menuButton.layer.transform = rotateButton(percent)
+        
+        let isOpen = menuViewController.view.frame.origin.x == 0.0 ? true : false
+        scannerViewController.captureButton.enabled = !isOpen
     }
     
     func rotateButton(percent: CGFloat) -> CATransform3D {
@@ -268,7 +271,7 @@ class MainViewController: UIViewController {
     }
     
     func popUpDischargeAlert(barcode : String, message : String) {
-        let ac = UIAlertController(title: "Discharge?", message: message, preferredStyle: .Alert)
+        let ac = UIAlertController(title: "Discharge?\n\(barcode)", message: message, preferredStyle: .Alert)
         ac.addAction(UIAlertAction(title: "No", style: .Default, handler: { (_) in
             self.scannerViewController.buttonReleased()
             self.scannerViewController.captureSession.startRunning()

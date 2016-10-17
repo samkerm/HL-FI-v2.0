@@ -23,6 +23,7 @@
 		2288AF411D98D06900A3AB30 /* SettingsTableTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2288AF401D98D06900A3AB30 /* SettingsTableTableViewController.swift */; };
 		2288AF451D9A2CEB00A3AB30 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2288AF441D9A2CEB00A3AB30 /* ListViewController.swift */; };
 		2288AF471D9A2E2600A3AB30 /* ListTopBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2288AF461D9A2E2600A3AB30 /* ListTopBarViewController.swift */; };
+		2299A2921DB4A04B00BD45A9 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2299A2911DB4A04B00BD45A9 /* Launch Screen.storyboard */; };
 		229A9D1B1DA708E100DD56D2 /* LogoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229A9D1A1DA708E100DD56D2 /* LogoView.swift */; };
 		22BE27E41D9F22F600C60C5B /* DetailsTopBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BE27E31D9F22F600C60C5B /* DetailsTopBarViewController.swift */; };
 		22BE27E61D9F2B4300C60C5B /* DetailsOfItemTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BE27E51D9F2B4300C60C5B /* DetailsOfItemTableViewController.swift */; };
@@ -55,6 +56,7 @@
 		2288AF401D98D06900A3AB30 /* SettingsTableTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingsTableTableViewController.swift; path = ../SettingsTableTableViewController.swift; sourceTree = "<group>"; };
 		2288AF441D9A2CEB00A3AB30 /* ListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
 		2288AF461D9A2E2600A3AB30 /* ListTopBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListTopBarViewController.swift; sourceTree = "<group>"; };
+		2299A2911DB4A04B00BD45A9 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		229A9D1A1DA708E100DD56D2 /* LogoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogoView.swift; sourceTree = "<group>"; };
 		22BE27E31D9F22F600C60C5B /* DetailsTopBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailsTopBarViewController.swift; sourceTree = "<group>"; };
 		22BE27E51D9F2B4300C60C5B /* DetailsOfItemTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailsOfItemTableViewController.swift; sourceTree = "<group>"; };
@@ -175,6 +177,7 @@
 				2288AF2C1D98B3A000A3AB30 /* ScannedItem.swift */,
 				2288AF301D98B3D700A3AB30 /* ParseBackendHandler.swift */,
 				814C3AC61B69877600E307BB /* Main.storyboard */,
+				2299A2911DB4A04B00BD45A9 /* Launch Screen.storyboard */,
 			);
 			path = ParseStarterProject;
 			sourceTree = "<group>";
@@ -264,6 +267,7 @@
 			files = (
 				814C3ACA1B69877600E307BB /* Main.storyboard in Resources */,
 				814C3ACB1B69877600E307BB /* Images.xcassets in Resources */,
+				2299A2921DB4A04B00BD45A9 /* Launch Screen.storyboard in Resources */,
 				8136E54C1CB4D7DD0011D421 /* Launch.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

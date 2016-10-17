@@ -19,8 +19,9 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
     let metadataOutput = AVCaptureMetadataOutput()
     var captureButton = UIButton()
     let dimmedView = UIView()
-    
-    
+    let targetView = UIView()
+    let line = UIView()
+    var scanmode = false
     
     //-------------------------------------------------------------------------------------------------------------
     //      MARK: APEARANCE
@@ -39,29 +40,55 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
         addCaptureSession()
         addPreviewLayer()
         addCaptureButton()
-        drawTargetRectangle()
+        drawTargetRectangle(UIColor.whiteColor())
+        view.addSubview(targetView)
+        line.frame = CGRect.zero
+        line.backgroundColor = .greenColor()
+        view.addSubview(line)
         initialInstructions()
     }
     
-    func drawTargetRectangle() {
-        let square = CGRect(x: view.frame.width/2 - 75, y: view.frame.height/2 - 75, width: 150, height: 150)
-        let rectangle = CGRect(x: 10, y: view.frame.height/2 - 40, width: view.frame.width - 20, height: 80)
-        let pathS = UIBezierPath(rect: square)
-        let shapeS = CAShapeLayer()
-        shapeS.path = pathS.CGPath
-        shapeS.lineWidth = 2
-        shapeS.lineDashPattern = [4,10,1,2]
-        shapeS.strokeColor = UIColor.redColor().CGColor
-        shapeS.fillColor = UIColor.clearColor().CGColor
-        let pathR = UIBezierPath(rect: rectangle)
-        let shapeR = CAShapeLayer()
-        shapeR.path = pathR.CGPath
-        shapeR.lineWidth = 4
-        shapeR.lineDashPattern = [10,30]
-        shapeR.strokeColor = UIColor.redColor().CGColor
-        shapeR.fillColor = UIColor.clearColor().CGColor
-        view.layer.addSublayer(shapeS)
-        view.layer.addSublayer(shapeR)
+    func drawTargetRectangle(color: UIColor) {
+        targetView.layer.sublayers?.removeAll()
+        targetView.frame = CGRect(x: 0.0, y: view.frame.height/2 - 40.0, width: view.frame.width, height: 80.0)
+        let rectTopPoints = [CGPoint(x: 20.0, y: 20.0),
+                          CGPoint(x: 20.0, y: 0.0), // controlPoints 1&2
+                          CGPoint(x: 40.0, y: 0.0),
+                          CGPoint(x: view.frame.width - 30.0, y: 0.0),
+                          CGPoint(x: view.frame.width - 20.0, y: 0.0), // controlPoints 1&2
+                          CGPoint(x: view.frame.width - 20.0, y: 20.0)]
+        let rectBottomPoints = [CGPoint(x: 20.0, y: 60.0),
+                          CGPoint(x: 20.0, y: 80.0), // controlPoints 1&2
+                          CGPoint(x: 30.0, y: 80.0),
+                          CGPoint(x: view.frame.width - 30.0, y: 80.0),
+                          CGPoint(x: view.frame.width - 20.0, y: 80.0), // controlPoints 1&2
+                          CGPoint(x: view.frame.width - 20.0, y: 60.0)]
+        
+        let topBarPath = UIBezierPath()
+        topBarPath.moveToPoint(rectTopPoints[0])
+        topBarPath.addCurveToPoint(rectTopPoints[2], controlPoint1: rectTopPoints[1], controlPoint2: rectTopPoints[1])
+        topBarPath.addLineToPoint(rectTopPoints[3])
+        topBarPath.addCurveToPoint(rectTopPoints[5], controlPoint1: rectTopPoints[4], controlPoint2: rectTopPoints[4])
+        topBarPath.addClip()
+        let topBarShape = CAShapeLayer()
+        topBarShape.path = topBarPath.CGPath
+        topBarShape.lineWidth = 2
+        topBarShape.strokeColor = color.CGColor
+        topBarShape.fillColor = UIColor.clearColor().CGColor
+        targetView.layer.addSublayer(topBarShape)
+        
+        let bottomBarPath = UIBezierPath()
+        bottomBarPath.moveToPoint(rectBottomPoints[0])
+        bottomBarPath.addCurveToPoint(rectBottomPoints[2], controlPoint1: rectBottomPoints[1], controlPoint2: rectBottomPoints[1])
+        bottomBarPath.addLineToPoint(rectBottomPoints[3])
+        bottomBarPath.addCurveToPoint(rectBottomPoints[5], controlPoint1: rectBottomPoints[4], controlPoint2: rectBottomPoints[4])
+        bottomBarPath.addClip()
+        let bottomBarShape = CAShapeLayer()
+        bottomBarShape.path = bottomBarPath.CGPath
+        bottomBarShape.lineWidth = 2
+        bottomBarShape.strokeColor = color.CGColor
+        bottomBarShape.fillColor = UIColor.clearColor().CGColor
+        targetView.layer.addSublayer(bottomBarShape)
     }
 
     func addCaptureButton() {
@@ -95,35 +122,25 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
     }
     
     func initialInstructions() {
+        captureButton.enabled = false
         dimmedView.frame = view.frame
         dimmedView.backgroundColor = UIColor(white: 0, alpha: 0.8)
         dimmedView.tag = 1001
         view.addSubview(dimmedView)
-        let text = UILabel(frame: CGRect(x: 0, y: self.view.bounds.height/2 - 25 , width: view.bounds.width, height: 50))
-        text.text = "Hold red button to capture the barcode"
+        let textCenter = CGPoint(x: dimmedView.bounds.width/2 - 50, y: dimmedView.bounds.height - 120)
+        let text = UILabel(frame: CGRect(origin: textCenter, size: CGSize(width: 100, height: 100)))
+        text.text = "Hold"
         text.textAlignment = .Center
         text.font = UIFont(name: "System-Regular", size: 17.0)
         text.textColor = .whiteColor()
-        text.alpha = 0
         dimmedView.addSubview(text)
-        UIView.animateWithDuration(1, delay: 0, options: [.CurveEaseIn, .AllowUserInteraction], animations: {
-            text.alpha = 1
-            }, completion: nil)
-        let animation = CABasicAnimation(keyPath: "transform.scale")
-        animation.fromValue = 2
-        animation.toValue = 1.0
-        animation.duration = 0.2
-        animation.beginTime = CACurrentMediaTime() + 1
-        text.layer.addAnimation(animation, forKey: nil)
-        UIView.animateWithDuration(3, delay: 2, options: [.AllowUserInteraction], animations: {
-            text.frame.offsetInPlace(dx: 0, dy: 90)
-            }, completion: nil)
-        UIView.animateWithDuration(6, delay: 4, options: [.CurveEaseOut, .AllowUserInteraction], animations: {
+        UIView.animateWithDuration(1, delay: 2, options: [.CurveEaseOut, .AllowUserInteraction], animations: {
             text.alpha = 0
             self.dimmedView.alpha = 0
             }, completion: { (_) in
                 text.removeFromSuperview()
                 self.dimmedView.removeFromSuperview()
+                self.captureButton.enabled = true
         })
     }
     
@@ -148,11 +165,18 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
         }
     }
     func captureOutput(captureOutput: AVCaptureOutput!, didOutputMetadataObjects metadataObjects: [AnyObject]!, fromConnection connection: AVCaptureConnection!) {
-        captureSession.stopRunning()
         if let metadataObject = metadataObjects.first {
             let readableObject = metadataObject as! AVMetadataMachineReadableCodeObject
-            AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
-            foundCode(readableObject.stringValue)
+            let barCodeObject = previewLayer!.transformedMetadataObjectForMetadataObject(readableObject)
+            self.drawLine(barCodeObject!.bounds)
+            pause(seconds: 1.0, completion: {
+                if self.scanmode {
+                    AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
+                    self.foundCode(readableObject.stringValue)
+                    self.line.frame = CGRect.zero
+                    self.scanmode = false
+                }
+            })
         }
     }
     
@@ -163,7 +187,9 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
     }
     
     func touchDown(){
+        scanmode = true
         captureButton.alpha = 0.2
+        drawTargetRectangle(UIColor.redColor())
         if (captureSession.canAddOutput(metadataOutput)) {
             captureSession.addOutput(metadataOutput)
             metadataOutput.setMetadataObjectsDelegate(self, queue: dispatch_get_main_queue())
@@ -179,8 +205,16 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
     }
     
     func buttonReleased() {
+        scanmode = false
+        line.frame = CGRect.zero
         captureButton.alpha = 1
         captureSession.removeOutput(metadataOutput)
+        drawTargetRectangle(UIColor.whiteColor())
+    }
+    
+    func drawLine(bound: CGRect) {
+        line.frame = bound
+        line.frame.size.height = 2.0
     }
     
     //-------------------------------------------------------------------------------------------------------------

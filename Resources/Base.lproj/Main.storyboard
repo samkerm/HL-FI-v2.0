@@ -26,7 +26,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                         <state key="normal" title="Done"/>
                                         <connections>
-                                            <action selector="doneButtonWithSender:" destination="ndy-fY-5ht" eventType="touchUpInside" id="W4s-6w-vvk"/>
+                                            <action selector="done:" destination="ndy-fY-5ht" eventType="touchUpInside" id="1hh-bU-Dxz"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -213,6 +213,9 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xEq-iB-CxG">
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="14.5" id="zXM-YO-Bag"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <color key="textColor" red="0.035294117649999998" green="0.47058823529999999" blue="0.69803921570000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -281,7 +284,7 @@
                             <constraint firstItem="Ay6-lO-yBO" firstAttribute="trailing" secondItem="7QN-nR-JdU" secondAttribute="trailingMargin" id="Imb-fd-4YQ"/>
                             <constraint firstItem="VlW-Wg-MSL" firstAttribute="trailing" secondItem="7QN-nR-JdU" secondAttribute="trailingMargin" id="Ioe-ag-fDs"/>
                             <constraint firstItem="Ay6-lO-yBO" firstAttribute="leading" secondItem="7QN-nR-JdU" secondAttribute="leadingMargin" id="fab-id-108"/>
-                            <constraint firstItem="VlW-Wg-MSL" firstAttribute="top" secondItem="Ay6-lO-yBO" secondAttribute="bottom" constant="16" id="n1e-0D-Ay9"/>
+                            <constraint firstItem="VlW-Wg-MSL" firstAttribute="top" secondItem="Ay6-lO-yBO" secondAttribute="bottom" constant="8" id="n1e-0D-Ay9"/>
                             <constraint firstItem="Ay6-lO-yBO" firstAttribute="centerX" secondItem="7QN-nR-JdU" secondAttribute="centerX" id="oiF-CJ-DvT"/>
                             <constraint firstItem="WRT-fC-C4p" firstAttribute="top" secondItem="VlW-Wg-MSL" secondAttribute="bottom" constant="16" id="qQE-Ub-BvC"/>
                             <constraint firstItem="VlW-Wg-MSL" firstAttribute="leading" secondItem="7QN-nR-JdU" secondAttribute="leadingMargin" id="y2h-Vf-oV8"/>
@@ -292,6 +295,7 @@
                         <outlet property="creatorsNameLabel" destination="TjI-IG-5dZ" id="7Ae-TM-zAb"/>
                         <outlet property="dateCreatedLabel" destination="ZEF-wj-IBz" id="QZq-mw-zLC"/>
                         <outlet property="dateLastDefrostedLabel" destination="aqG-h0-lNb" id="0sN-te-DSU"/>
+                        <outlet property="detailedInformationHeightConstraint" destination="zXM-YO-Bag" id="RpB-IN-MPE"/>
                         <outlet property="detailedInformationLabel" destination="xEq-iB-CxG" id="2hi-G7-k7Y"/>
                         <outlet property="doneView" destination="VlW-Wg-MSL" id="dq6-eV-txF"/>
                         <outlet property="lastDefrostedByLabel" destination="K20-Q3-cAD" id="2YF-Uz-wTA"/>
@@ -1014,7 +1018,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" textLabel="RqD-BT-qPA" detailTextLabel="KyS-pK-g6M" style="IBUITableViewCellStyleValue1" id="gxV-b9-7rH">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="Cell" textLabel="RqD-BT-qPA" detailTextLabel="KyS-pK-g6M" style="IBUITableViewCellStyleValue1" id="gxV-b9-7rH">
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gxV-b9-7rH" id="ig9-pF-K0g">
@@ -1067,7 +1071,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                         <state key="normal" title="Done"/>
                                         <connections>
-                                            <action selector="doneButtonWithSender:" destination="2xE-K0-SGh" eventType="touchUpInside" id="D8L-Oe-LG3"/>
+                                            <action selector="done:" destination="2xE-K0-SGh" eventType="touchUpInside" id="VvY-G2-pAU"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -1237,6 +1241,9 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1zj-ii-WDd">
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="14.5" id="E3q-G4-vQe"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <color key="textColor" red="0.035294117649999998" green="0.47058823529999999" blue="0.69803921570000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -1301,7 +1308,7 @@
                             <constraint firstItem="fIu-dt-vCK" firstAttribute="top" secondItem="zMn-ut-qUw" secondAttribute="bottom" constant="16" id="4jS-e3-yqL"/>
                             <constraint firstItem="acD-iX-tca" firstAttribute="leading" secondItem="5h9-9n-YaF" secondAttribute="leadingMargin" id="VAo-F9-1tU"/>
                             <constraint firstItem="zMn-ut-qUw" firstAttribute="trailing" secondItem="5h9-9n-YaF" secondAttribute="trailingMargin" id="bpB-iA-bwo"/>
-                            <constraint firstItem="zMn-ut-qUw" firstAttribute="top" secondItem="acD-iX-tca" secondAttribute="bottom" constant="16" id="ord-fc-Req"/>
+                            <constraint firstItem="zMn-ut-qUw" firstAttribute="top" secondItem="acD-iX-tca" secondAttribute="bottom" constant="8" id="ord-fc-Req"/>
                             <constraint firstItem="acD-iX-tca" firstAttribute="centerX" secondItem="5h9-9n-YaF" secondAttribute="centerX" id="slU-2V-8xn"/>
                             <constraint firstItem="acD-iX-tca" firstAttribute="trailing" secondItem="5h9-9n-YaF" secondAttribute="trailingMargin" id="tP5-yt-5aD"/>
                         </constraints>
@@ -1311,6 +1318,7 @@
                         <outlet property="creatorsNameLabel" destination="QG3-F2-yKL" id="vzd-wJ-LZo"/>
                         <outlet property="dateCreatedLabel" destination="gP8-o4-kqo" id="kj5-PP-8ry"/>
                         <outlet property="dateLastDefrostedLabel" destination="8AN-12-CyS" id="ojk-nJ-DgB"/>
+                        <outlet property="detailedInformationHeightConstraint" destination="E3q-G4-vQe" id="rWo-mT-jSq"/>
                         <outlet property="detailedInformationLabel" destination="1zj-ii-WDd" id="e8c-yb-oTm"/>
                         <outlet property="doneView" destination="zMn-ut-qUw" id="cD3-JH-23j"/>
                         <outlet property="expiryDateLabel" destination="lrx-P0-Xze" id="m1T-K5-bzB"/>

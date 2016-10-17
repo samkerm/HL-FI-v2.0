@@ -57,7 +57,45 @@ class ListTopBarViewController: UIViewController {
     }
     
     func submitButtonPressed() {
-        
+        if let listVC = self.parentViewController as? ListViewController {
+            switch listVC.deviceModeIndex {
+            case 1:
+                listVC.parseHandler.addScannedItemsToDataBase(listVC.scannedItems, completion: { (success, error, index) in
+                    if success && index == 0 {
+                        listVC.scannedItems.removeAll()
+                        listVC.delegate.listScannedItemsReturned(listVC.scannedItems)
+                        if let listTableVC = listVC.childViewControllers.last as? ListTableViewController {
+                            listTableVC.scannedItems = listVC.scannedItems
+                            listTableVC.tableView.reloadData()
+                            if listVC.scannedItems.isEmpty {
+                                self.dismissViewControllerAnimated(true, completion: nil)
+                            }
+                        }
+                    } else {
+                        print("Found error saving \(listVC.scannedItems[index]). All items before this have been saved. \(error).")
+                        for i in 0..<index {
+                            listVC.scannedItems.removeAtIndex(i)
+                        }
+                        listVC.delegate.listScannedItemsReturned(listVC.scannedItems)
+                        if let listTableVC = listVC.childViewControllers.last as? ListTableViewController {
+                            listTableVC.scannedItems = listVC.scannedItems
+                            listTableVC.tableView.reloadData()
+                        }
+                    }
+
+                })
+            default:
+                listVC.scannedItems = listVC.parseHandler.updateChanges(listVC.scannedItems, defrostingUser: listVC.curentUser)
+                listVC.delegate.listScannedItemsReturned(listVC.scannedItems)
+                if let listTableVC = listVC.childViewControllers.last as? ListTableViewController {
+                    listTableVC.scannedItems = listVC.scannedItems
+                    listTableVC.tableView.reloadData()
+                    if listTableVC.scannedItems.isEmpty {
+                        self.dismissViewControllerAnimated(true, completion: nil)
+                    }
+                }
+            }
+        }
     }
     /*
     // MARK: - Navigation

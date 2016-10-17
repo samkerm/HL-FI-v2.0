@@ -24,16 +24,17 @@ class PlateScanSuccessPopOverVC: UIViewController {
     @IBOutlet weak var creatorsNameLabel: UILabel!
     @IBOutlet weak var dateCreatedLabel: UILabel!
     @IBOutlet weak var detailedInformationLabel: UILabel!
+    @IBOutlet weak var detailedInformationHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var successfullViewHeightConstraint: NSLayoutConstraint!
-    @IBAction func doneButton(sender: AnyObject) {
+    @IBAction func done(sender: AnyObject) {
         dismissViewControllerAnimated(true, completion: nil)
     }
 
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        doneView.layer.cornerRadius = 20
-        successfulView.layer.cornerRadius = 20
+        doneView.layer.cornerRadius = 10
+        successfulView.layer.cornerRadius = 10
         if (scannedItem != nil) {
             barcodeLabel.text = scannedItem.barcode
             plateNameLabel.text = scannedItem.name
@@ -46,11 +47,16 @@ class PlateScanSuccessPopOverVC: UIViewController {
             dateCreatedLabel.text = scannedItem.dateCreated
             detailedInformationLabel.text = scannedItem.detailedInformation
         }
-        detailedInformationLabel.sizeToFit()
-        let DILFrameHeight = min(detailedInformationLabel.frame.size.height, 86)
-        detailedInformationLabel.frame.size.height = DILFrameHeight
-        view.layoutIfNeeded()
-        successfullViewHeightConstraint.constant += DILFrameHeight - 15
+        
+        let string = detailedInformationLabel.text! as NSString
+        let atributes = [NSFontAttributeName : detailedInformationLabel.font ]
+        let widthSize = string.sizeWithAttributes(atributes).width
+        let heightSize = string.sizeWithAttributes(atributes).height
+        let DILWidth = self.view.frame.size.width - 32.0
+        let rowScale = ceil(widthSize / DILWidth)
+        let heightIncrease = heightSize * rowScale
+        detailedInformationHeightConstraint.constant = heightIncrease
+        successfullViewHeightConstraint.constant += heightIncrease - 15
     }
  
     override func didReceiveMemoryWarning() {
@@ -74,5 +80,5 @@ class PlateScanSuccessPopOverVC: UIViewController {
     override func viewWillDisappear(animated: Bool) {
         self.view.backgroundColor = UIColor.clearColor()
     }
-
+    
 }

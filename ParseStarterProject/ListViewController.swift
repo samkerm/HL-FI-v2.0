@@ -47,6 +47,9 @@ class ListViewController: UIViewController {
         addChildViewController(listTableViewController)
         view.addSubview(listTableViewController.view)
         listTableViewController.didMoveToParentViewController(self)
+        
+        let panGuesture = UIPanGestureRecognizer(target: self, action: #selector(dismissVC(_:)))
+        view.addGestureRecognizer(panGuesture)
     }
     override func viewDidDisappear(animated: Bool) {
         comingFromMainVC = false
@@ -84,6 +87,14 @@ class ListViewController: UIViewController {
     func updateScannedItemsGlobally(scannedItems: [ScannedItem]) {
         self.scannedItems = scannedItems
         delegate.listScannedItemsReturned(scannedItems)
+    }
+    
+    func dismissVC(recognizer: UIPanGestureRecognizer) {
+        let translation = recognizer.translationInView(recognizer.view!.superview!)
+        let completed = (translation.x / (view.frame.size.width/2)) > 1 ? true : false
+        if completed {
+            self.dismissViewControllerAnimated(true, completion: nil)
+        }
     }
     
 //    required init?(coder aDecoder: NSCoder) {

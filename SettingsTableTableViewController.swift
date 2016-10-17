@@ -23,7 +23,7 @@ class SettingsTableTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.tableView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.3)
+        self.tableView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.8)
     }
     
     override func viewWillAppear(animated: Bool) {

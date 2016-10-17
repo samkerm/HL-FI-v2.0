@@ -25,13 +25,14 @@ class ProductScanSuccessViewController: UIViewController {
     @IBOutlet weak var expiryDateLabel: UILabel!
     @IBOutlet weak var detailedInformationHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var successfullViewHeightConstraint: NSLayoutConstraint!
-    @IBAction func doneButton(sender: AnyObject) {
+
+    @IBAction func done(sender: AnyObject) {
         dismissViewControllerAnimated(true, completion: nil)
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        doneView.layer.cornerRadius = 20
-        successfulView.layer.cornerRadius = 20
+        doneView.layer.cornerRadius = 10
+        successfulView.layer.cornerRadius = 10
         if (scannedItem != nil) {
             barcodeLabel.text = scannedItem.barcode
             nameLabel.text = scannedItem.name
@@ -43,11 +44,16 @@ class ProductScanSuccessViewController: UIViewController {
             expiryDateLabel.text = scannedItem.expiryDate
             detailedInformationLabel.text = scannedItem.detailedInformation
         }
-        detailedInformationLabel.sizeToFit()
-        let DILFrameHeight = min(detailedInformationLabel.frame.size.height, 86)
-        detailedInformationLabel.frame.size.height = DILFrameHeight
-        view.layoutIfNeeded()
-        successfullViewHeightConstraint.constant += DILFrameHeight - 15
+        
+        let string = detailedInformationLabel.text! as NSString
+        let atributes = [NSFontAttributeName : detailedInformationLabel.font ]
+        let widthSize = string.sizeWithAttributes(atributes).width
+        let heightSize = string.sizeWithAttributes(atributes).height
+        let DILWidth = self.view.frame.size.width - 32.0
+        let rowScale = ceil(widthSize / DILWidth)
+        let heightIncrease = heightSize * rowScale
+        detailedInformationHeightConstraint.constant = heightIncrease
+        successfullViewHeightConstraint.constant += heightIncrease - 15
     }
     
     override func didReceiveMemoryWarning() {

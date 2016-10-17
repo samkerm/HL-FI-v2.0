@@ -78,6 +78,7 @@ class DetailsOfItemTableViewController: UITableViewController {
         if indexPath.row == contentArray.count - 1 {
             cell = UITableViewCell(style: .Subtitle, reuseIdentifier: "Cell")
             cell.detailTextLabel?.numberOfLines = 0
+            cell.selectionStyle = .None
         } else {
             cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
         }

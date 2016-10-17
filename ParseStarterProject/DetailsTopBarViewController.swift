@@ -13,7 +13,6 @@ class DetailsTopBarViewController: UIViewController {
     var height = CGFloat()
     let text = UILabel()
     let backButton = UIButton()
-    let submitButton = UIButton()
     
     override func viewDidLoad() {
         super.viewDidLoad()

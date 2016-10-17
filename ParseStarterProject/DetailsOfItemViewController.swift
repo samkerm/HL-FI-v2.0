@@ -31,9 +31,9 @@ class DetailsOfItemViewController: UIViewController {
         let parentVC = MainViewController()
         topBarHeight = parentVC.topBarHeight
 
-        detailsTopBarViewController.view.frame = CGRect(x: 0, y: 0, width: 0, height: topBarHeight)
+        detailsTopBarViewController.view.frame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: topBarHeight)
         detailsOfItemTableViewController = storyboard?.instantiateViewControllerWithIdentifier("detailsTableViewController") as! DetailsOfItemTableViewController
-        detailsOfItemTableViewController.view.frame = CGRect(x: 0, y: topBarHeight, width: 0, height: self.view.frame.height - topBarHeight)
+        detailsOfItemTableViewController.view.frame = CGRect(x: 0, y: topBarHeight, width: self.view.frame.size.width, height: self.view.frame.height - topBarHeight)
         detailsOfItemTableViewController.scannedItem = scannedItem
         
         addChildViewController(detailsTopBarViewController)
@@ -44,17 +44,22 @@ class DetailsOfItemViewController: UIViewController {
         view.addSubview(detailsOfItemTableViewController.view)
         detailsOfItemTableViewController.didMoveToParentViewController(self)
         
-        UIView.animateWithDuration(animationTime, delay: 0.0, usingSpringWithDamping: 0.1, initialSpringVelocity: 1.0, options: [.CurveEaseOut], animations: {
-            self.detailsTopBarViewController.view.frame.size.width = self.view.frame.size.width
-            self.detailsOfItemTableViewController.view.frame.size.width = self.view.frame.size.width
-            }, completion: nil)
+        let panGuesture = UIPanGestureRecognizer(target: self, action: #selector(dismissVC(_:)))
+        view.addGestureRecognizer(panGuesture)
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
+
+    func dismissVC(recognizer: UIPanGestureRecognizer) {
+        let translation = recognizer.translationInView(recognizer.view!.superview!)
+        let completed = (translation.x / (view.frame.size.width/2)) > 1 ? true : false
+        if completed {
+            self.dismissViewControllerAnimated(true, completion: nil)
+        }
+    }
 
     /*
     // MARK: - Navigation
