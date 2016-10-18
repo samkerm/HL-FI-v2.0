@@ -25,7 +25,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     //--------------------------------------
     // MARK: - UIApplicationDelegate
     //--------------------------------------
-
+    
+    
+    
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // ****************************************************************************
         // Initialize Parse SDK
@@ -153,4 +155,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject?) -> Bool {
     //     return FBAppCall.handleOpenURL(url, sourceApplication:sourceApplication, session:PFFacebookUtils.session())
     // }
+}
+
+extension UIApplication {
+    class func isFirstLaunch() -> Bool {
+        if !NSUserDefaults.standardUserDefaults().boolForKey("HasAtLeastLaunchedOnce") {
+            NSUserDefaults.standardUserDefaults().setBool(true, forKey: "HasAtLeastLaunchedOnce")
+            NSUserDefaults.standardUserDefaults().synchronize()
+            return true
+        }
+        return false
+    }
 }

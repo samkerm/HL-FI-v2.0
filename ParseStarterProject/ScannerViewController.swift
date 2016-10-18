@@ -48,6 +48,7 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
         initialInstructions()
     }
     
+    
     func drawTargetRectangle(color: UIColor) {
         targetView.layer.sublayers?.removeAll()
         targetView.frame = CGRect(x: 0.0, y: view.frame.height/2 - 40.0, width: view.frame.width, height: 80.0)
@@ -142,6 +143,7 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
                 self.dimmedView.removeFromSuperview()
                 self.captureButton.enabled = true
         })
+        
     }
     
     //------------------------------------------------------------------------------------------------------------

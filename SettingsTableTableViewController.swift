@@ -29,6 +29,7 @@ class SettingsTableTableViewController: UITableViewController {
     override func viewWillAppear(animated: Bool) {
         tableView.reloadData()
     }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -56,6 +57,7 @@ class SettingsTableTableViewController: UITableViewController {
         switch indexPath.section {
         case 0:
             let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
+            cell.accessoryType = .None
             cell.textLabel!.text = modesArray[indexPath.row]
             cell.textLabel?.textColor = .whiteColor()
             cell.textLabel?.textAlignment = .Justified
@@ -70,6 +72,8 @@ class SettingsTableTableViewController: UITableViewController {
             cell.textLabel?.textAlignment = .Justified
             cell.backgroundColor = .clearColor()
             cell.selectionStyle = .None
+            cell.highlighted = false
+
             return cell
         default:
             let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
@@ -78,6 +82,7 @@ class SettingsTableTableViewController: UITableViewController {
             cell.textLabel?.textAlignment = .Justified
             cell.backgroundColor = .clearColor()
             cell.selectionStyle = .None
+            cell.highlighted = false
             return cell
         }
     }
@@ -101,6 +106,7 @@ class SettingsTableTableViewController: UITableViewController {
             tableView.cellForRowAtIndexPath(indexPath)?.textLabel?.textColor = UIColor.whiteColor()
         }
     }
+
     
 //    override func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
 //        return NSIndexPath(forRow: index, inSection: 0)

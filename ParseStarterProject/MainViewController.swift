@@ -12,6 +12,7 @@ class MainViewController: UIViewController {
     
     // All view instanses of controllers
     let menuWidth: CGFloat = (UIScreen.mainScreen().bounds.width/4) * 2.0
+    let menuHeight: CGFloat = 400.0
     let topBarHeight : CGFloat = 60.0
     let animationTime: NSTimeInterval = 0.5
     var isOpening = false
@@ -66,7 +67,7 @@ class MainViewController: UIViewController {
         setNeedsStatusBarAppearanceUpdate()
         
         menuViewController = self.storyboard?.instantiateViewControllerWithIdentifier("menu") as! SettingsTableTableViewController
-        menuViewController.view.frame = CGRect(x: -menuWidth, y: topBarHeight, width: menuWidth, height: view.frame.height)
+        menuViewController.view.frame = CGRect(x: -menuWidth, y: topBarHeight, width: menuWidth, height: menuHeight)
         topbarViewController.view.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: topBarHeight)
         
         addChildViewController(scannerViewController)
@@ -81,7 +82,7 @@ class MainViewController: UIViewController {
         view.addSubview(menuViewController.view)
         menuViewController.didMoveToParentViewController(self)
         
-        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handleGesture))
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture))
         view.addGestureRecognizer(panGesture)
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapGuesture))
@@ -121,7 +122,7 @@ class MainViewController: UIViewController {
         }
     }
     // Guesture recognizine a drag on the screen and trnslates to percentage
-    func handleGesture(recognizer: UIPanGestureRecognizer) {
+    func handlePanGesture(recognizer: UIPanGestureRecognizer) {
         let translation = recognizer.translationInView(recognizer.view!.superview!)
         var progress = translation.x / menuWidth * (isOpening ? 1.0 : -1.0)
         progress = min(max(progress, 0.0), 1.0)
@@ -130,8 +131,7 @@ class MainViewController: UIViewController {
         case .Began:
             isOpening = menuViewController.view.frame.origin.x == 0.0 ? false: true
             menuViewController.view.layer.shouldRasterize = true
-            menuViewController.view.layer.rasterizationScale =
-                UIScreen.mainScreen().scale
+            menuViewController.view.layer.rasterizationScale = UIScreen.mainScreen().scale
         case .Changed:
             self.setToPercent(isOpening ? progress : (1.0 - progress))
         case .Ended: fallthrough
@@ -172,14 +172,19 @@ class MainViewController: UIViewController {
     }
     
     func setToPercent(percent: CGFloat) {
+//        menuViewController.tableView.alpha = percent < 0.5 ? 0.0 : 1.0
         menuViewController.view.alpha = CGFloat(max(0.2, percent))
+//        menuViewController.view.frame.origin.x = 25.0 - percent * 25.0
         menuViewController.view.frame.origin.x = -menuWidth + menuWidth * CGFloat(percent)
-        scannerViewController.view.alpha = CGFloat(max(0.2, 1 - percent))
-        let menuButton = topbarViewController.menuButton
-        menuButton.layer.transform = rotateButton(percent)
+//        menuViewController.view.frame.size.width = menuWidth * CGFloat(percent)
+//        menuViewController.view.frame.size.height = menuHeight * CGFloat(percent)
         
         let isOpen = menuViewController.view.frame.origin.x == 0.0 ? true : false
         scannerViewController.captureButton.enabled = !isOpen
+        scannerViewController.view.alpha = CGFloat(max(0.5, 1 - percent))
+        
+        let menuButton = topbarViewController.menuButton
+        menuButton.layer.transform = rotateButton(percent)
     }
     
     func rotateButton(percent: CGFloat) -> CATransform3D {
