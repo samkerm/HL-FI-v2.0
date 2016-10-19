@@ -36,6 +36,15 @@ class LogInViewController: UIViewController {
     let unHighlightedColor = UIColor(red: 19/255, green: 22/255, blue: 23/255, alpha: 1.0)
     let parseBackendHandler = ParseBackendHandler()
     var curentUser = CurentUser()
+    var loginButtonVerticalSpacing: CGFloat!
+    var signupButtonVerticalSpacing: CGFloat!
+    enum device {
+        case iPhone6plus
+        case iPhone6
+        case iPhone5
+        case iPhone4
+    }
+    var curentDevice: device!
     
     enum signUpError {
         case None
@@ -43,7 +52,6 @@ class LogInViewController: UIViewController {
         case ShortPassword
         case WrongEmailFormat
     }
-    
     var errorState : signUpError = .None {
         didSet{
             shake(signupButton)
@@ -109,6 +117,8 @@ class LogInViewController: UIViewController {
     @IBOutlet weak var firstnameLabel: UILabel!
     @IBOutlet weak var lastnameLabel: UILabel!
     @IBOutlet weak var emailLabel: UILabel!
+    @IBOutlet weak var usernameUnderline: UIView!
+    @IBOutlet weak var passwordUnderline: UIView!
     @IBOutlet weak var retypePasswordUnderline: UIView!
     @IBOutlet weak var firstnameUndeline: UIView!
     @IBOutlet weak var lastnameUnderline: UIView!
@@ -118,6 +128,7 @@ class LogInViewController: UIViewController {
     @IBOutlet weak var signupButton: UIButton!
     @IBOutlet weak var loginVerticalSpacingConstraint: NSLayoutConstraint!
     @IBOutlet weak var signupVerticalSpacingConstraint: NSLayoutConstraint!
+    @IBOutlet weak var usernameVerticalSpacingConstraint: NSLayoutConstraint!
     @IBAction func login(sender: AnyObject) {
         if loginState {
             if !usernameTextField.text!.isEmpty &&
@@ -185,9 +196,11 @@ class LogInViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        layoutContent()
         setLoginState()
         addSnowFlakes()
-        logo.frame.origin.y = 40.0
+        
+        logo.center.x = view.center.x
         
         usernameTextField.delegate = self
         passwordTextField.delegate = self
@@ -200,6 +213,31 @@ class LogInViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    func layoutContent() {
+        switch view.frame.size.height {
+        case 736:
+            curentDevice = .iPhone6plus
+            fallthrough
+        case 667:
+            curentDevice = .iPhone6
+            logo.frame.origin.y = 40.0
+            usernameVerticalSpacingConstraint.constant = 130
+            loginButtonVerticalSpacing = 230.0
+            signupButtonVerticalSpacing = 280.0
+        case 568:
+            curentDevice = .iPhone5
+            logo.frame.origin.y = 40.0
+            usernameVerticalSpacingConstraint.constant = 80
+            loginButtonVerticalSpacing = 180.0
+            signupButtonVerticalSpacing = 230.0
+        default:
+            curentDevice = .iPhone4
+            logo.frame.origin.y = 20.0
+            usernameVerticalSpacingConstraint.constant = 40
+            loginButtonVerticalSpacing = 130.0
+            signupButtonVerticalSpacing = 180.0
+        }
     }
     
     func setLoginState() {
@@ -219,8 +257,8 @@ class LogInViewController: UIViewController {
         emailLabel.alpha = 0.0
         emailUnderline.alpha = 0.0
         
-        self.loginVerticalSpacingConstraint.constant = 230.0
-        self.signupVerticalSpacingConstraint.constant = 280.0
+        self.loginVerticalSpacingConstraint.constant = loginButtonVerticalSpacing
+        self.signupVerticalSpacingConstraint.constant = signupButtonVerticalSpacing
         self.loginButton.backgroundColor = self.highlightedColor
         self.signupButton.backgroundColor = self.unHighlightedColor
         
@@ -245,8 +283,8 @@ class LogInViewController: UIViewController {
         emailLabel.alpha = 1.0
         emailUnderline.alpha = 1.0
         
-        self.loginVerticalSpacingConstraint.constant = 500.0
-        self.signupVerticalSpacingConstraint.constant = 450.0
+        self.loginVerticalSpacingConstraint.constant += 270.0
+        self.signupVerticalSpacingConstraint.constant += 170.0
         self.signupButton.backgroundColor = self.highlightedColor
         self.loginButton.backgroundColor = self.unHighlightedColor
         
@@ -334,6 +372,42 @@ extension LogInViewController: UITextFieldDelegate {
         return true
     }
     
+    func textFieldDidBeginEditing(textField: UITextField) {
+        
+        if curentDevice == .iPhone4 || curentDevice == .iPhone5 {
+            switch textField {
+            case lastnameTextField:
+                self.usernameLabel.alpha = 0.0
+                self.usernameTextField.alpha = 0.0
+                self.usernameUnderline.alpha = 0.0
+                self.usernameVerticalSpacingConstraint.constant = (curentDevice == .iPhone4) ? -10.0 : 30.0
+            case emailTextField:
+                self.usernameLabel.alpha = 0.0
+                self.usernameTextField.alpha = 0.0
+                self.usernameUnderline.alpha = 0.0
+                self.passwordLabel.alpha = 0.0
+                self.passwordTextField.alpha = 0.0
+                self.passwordUnderline.alpha = 0.0
+                self.usernameVerticalSpacingConstraint.constant = (curentDevice == .iPhone4) ? -60.0 : -20.0
+            default:
+                break
+            }
+        }
+    }
+    
+    func textFieldDidEndEditing(textField: UITextField) {
+        self.usernameLabel.alpha = 1.0
+        self.usernameTextField.alpha = 1.0
+        self.usernameUnderline.alpha = 1.0
+        self.passwordLabel.alpha = 1.0
+        self.passwordTextField.alpha = 1.0
+        self.passwordUnderline.alpha = 1.0
+        if curentDevice == .iPhone4 {
+            self.usernameVerticalSpacingConstraint.constant  = 40
+        } else if curentDevice == .iPhone5 {
+            self.usernameVerticalSpacingConstraint.constant  = 80
+        }
+    }
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         view.endEditing(true)
     }
