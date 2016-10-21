@@ -23,6 +23,20 @@ class ArchivePopOverViewController: UIViewController {
     var curentUser : CurentUser!
     var delegate : ArchivePopOverViewControllerDelegate!
     var topViewController : UIViewController?
+    enum device {
+        case iPhone6plus
+        case iPhone6
+        case iPhone5
+        case iPhone4
+    }
+    var curentDevice: device!
+    
+    var containerViewVerticalSpacing: CGFloat!
+    var containerViewHeight: CGFloat!
+    var itemsDetailsHeight: CGFloat!
+    var scrollViewHeight: CGFloat!
+    var scrollViewContentToScrollViewBottomHeight: CGFloat!
+    var productHeightChange: CGFloat!
     
     @IBOutlet weak var headerLabel: UILabel!
     @IBOutlet weak var nameTextField: UITextField!
@@ -40,6 +54,7 @@ class ArchivePopOverViewController: UIViewController {
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var okButton: UIButton!
+    @IBOutlet weak var scrollViewContentToScrollViewBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var scrollViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var containerViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var itemsDetailsHeightConstraint: NSLayoutConstraint!
@@ -48,6 +63,8 @@ class ArchivePopOverViewController: UIViewController {
     @IBOutlet weak var containerViewVerticalSpacingConstraint: NSLayoutConstraint!
     @IBOutlet weak var expiryDateVerticalSpacingConstraint: NSLayoutConstraint!
     @IBAction func itemTypeChanged(sender: AnyObject) {
+        view.endEditing(true)
+//        self.view.layoutIfNeeded()
         if itemType.selectedSegmentIndex == 0 {
             showPlatelayout()
             plateState = true
@@ -97,7 +114,6 @@ class ArchivePopOverViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(itemType.selectedSegmentIndex)
         headerLabel.text = scannedBarcode
         expieryDate.alpha = 0
         adjusTheFrames()
@@ -118,9 +134,37 @@ class ArchivePopOverViewController: UIViewController {
         modalPresentationStyle = .Custom
     }
     func adjusTheFrames() {
-        let parentVC = MainViewController()
-        containerViewVerticalSpacingConstraint.constant = parentVC.topBarHeight
-        scrollView.contentSize = CGSize(width: self.view.frame.size.width - (2 * 16), height: 360.0)
+        switch view.frame.size.height {
+        case 736:
+            curentDevice = .iPhone6plus
+        case 667:
+            curentDevice = .iPhone6
+            containerViewHeight = 430
+            itemsDetailsHeight = 290
+            scrollViewHeight = 290
+            scrollViewContentToScrollViewBottomHeight = 0
+            productHeightChange = 110
+            let parentVC = MainViewController()
+            containerViewVerticalSpacing = parentVC.topBarHeight
+        case 568:
+            curentDevice = .iPhone5
+        default:
+            print("❤️ trigered")
+            curentDevice = .iPhone4
+            containerViewHeight = 380
+            itemsDetailsHeight = 290
+            scrollViewHeight = 240
+            scrollViewContentToScrollViewBottomHeight = 10
+            productHeightChange = 95
+            containerViewVerticalSpacing = 40
+        }
+        containerViewHeightConstraint.constant = containerViewHeight
+        itemsDetailsHeightConstraint.constant = itemsDetailsHeight
+        scrollViewHeightConstraint.constant = scrollViewHeight
+        scrollViewContentToScrollViewBottomConstraint.constant = scrollViewContentToScrollViewBottomHeight
+        containerViewVerticalSpacingConstraint.constant = containerViewVerticalSpacing
+        scrollView.contentSize = CGSize(width: self.view.frame.size.width - (2 * 16), height: itemsDetailsHeight)
+        self.view.layoutIfNeeded()
     }
     func resetContent() {
         nameTextField.text = ""
@@ -142,10 +186,10 @@ class ArchivePopOverViewController: UIViewController {
             self.plateStatus.alpha = 1
             self.expieryDate.alpha = 0
             self.nameTextField.placeholder = "Plate Name > 4 characters"
-            self.containerViewHeightConstraint.constant = 430
-            self.itemsDetailsHeightConstraint.constant = 360
-            self.scrollViewHeightConstraint.constant = 360
-            self.scrollView.contentSize.height = 360
+            self.containerViewHeightConstraint.constant = self.containerViewHeight
+            self.itemsDetailsHeightConstraint.constant = self.itemsDetailsHeight
+            self.scrollViewHeightConstraint.constant = self.scrollViewHeight
+            self.scrollView.contentSize.height = self.scrollViewHeight
             self.freezerLocationVerticalSpacingConstraint.constant = 75
             self.view.layoutIfNeeded()
         }
@@ -158,11 +202,11 @@ class ArchivePopOverViewController: UIViewController {
             self.plateStatus.alpha = 0
             self.expieryDate.alpha = 1
             self.nameTextField.placeholder = "Product Name"
-            self.containerViewHeightConstraint.constant = 320
-            self.itemsDetailsHeightConstraint.constant = 250
+            self.containerViewHeightConstraint.constant -= self.productHeightChange
+            self.itemsDetailsHeightConstraint.constant -= self.productHeightChange
             self.freezerLocationVerticalSpacingConstraint.constant = 5
-            self.scrollViewHeightConstraint.constant = 250
-            self.scrollView.contentSize.height = 250
+            self.scrollViewHeightConstraint.constant -= self.productHeightChange
+            self.scrollView.contentSize.height -= self.productHeightChange
             self.view.layoutIfNeeded()
             
         }
@@ -356,7 +400,7 @@ extension ArchivePopOverViewController : UITextFieldDelegate {
     func textFieldDidEndEditing(textField: UITextField) {
         if textField == detailedInformationTextField && plateState{
             UIView.animateWithDuration(1.0, animations: {
-                self.containerViewVerticalSpacingConstraint.constant = self.view.frame.size.height/48
+                self.containerViewVerticalSpacingConstraint.constant = self.containerViewVerticalSpacing
                 self.view.layoutIfNeeded()
             })
         }
