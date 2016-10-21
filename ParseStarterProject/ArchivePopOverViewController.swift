@@ -136,7 +136,7 @@ class ArchivePopOverViewController: UIViewController {
     func adjusTheFrames() {
         switch view.frame.size.height {
         case 736:
-            curentDevice = .iPhone6plus
+            fallthrough
         case 667:
             curentDevice = .iPhone6
             containerViewHeight = 430
@@ -147,9 +147,8 @@ class ArchivePopOverViewController: UIViewController {
             let parentVC = MainViewController()
             containerViewVerticalSpacing = parentVC.topBarHeight
         case 568:
-            curentDevice = .iPhone5
+            fallthrough
         default:
-            print("❤️ trigered")
             curentDevice = .iPhone4
             containerViewHeight = 380
             itemsDetailsHeight = 290
