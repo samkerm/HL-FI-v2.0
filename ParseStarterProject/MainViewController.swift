@@ -152,7 +152,18 @@ class MainViewController: UIViewController {
         }
     }
     
-    
+    func checkBarcodeIsInScannedList(barcode: String) -> Bool {
+        if !scannedItems.isEmpty {
+            for scannedItem in scannedItems {
+                if scannedItem.barcode == barcode {
+                    return true
+                }
+            }
+            return false
+        } else {
+            return false
+        }
+    }
     
 //-------------------------------------------------------------------------------------------------------------
 //      MARK: APEARANCE
@@ -236,42 +247,54 @@ class MainViewController: UIViewController {
     }
     
     func popUpDefrostAlert(barcodeText: String, message: String) {
-        parseBackendHandler.lookUpBarcode(barcodeText) { (exists, error, returnedItem) in
-            if exists {
-                let ac = UIAlertController(title: barcodeText, message: message, preferredStyle: .Alert)
-                ac.addAction(UIAlertAction(title: "No", style: .Cancel, handler: { (_) in
-                    self.scannerViewController.buttonReleased()
-                    self.scannerViewController.captureSession.startRunning()
-                }))
-                ac.addAction(UIAlertAction(title: "Yes", style: .Default, handler: { (_) in
-                    self.scannedItems.append(returnedItem)
-                    self.showText("Success")
-                    self.scannerViewController.buttonReleased()
-                    self.scannerViewController.captureSession.startRunning()
-                }))
-                self.presentViewController(ac, animated: true, completion: nil)
-            } else {
-                let ac = UIAlertController(title: "Oops!", message: "This barcode has not been registered in our inventory. Please register the barcode first before defrosting it.", preferredStyle: .Alert)
-                ac.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (_) in
-                    self.scannerViewController.buttonReleased()
-                    self.scannerViewController.captureSession.startRunning()
-                }))
-                self.presentViewController(ac, animated: true, completion: nil)
+        if !checkBarcodeIsInScannedList(barcodeText) {
+            parseBackendHandler.lookUpBarcode(barcodeText) { (exists, error, returnedItem) in
+                if exists {
+                    let ac = UIAlertController(title: barcodeText, message: message, preferredStyle: .Alert)
+                    ac.addAction(UIAlertAction(title: "No", style: .Cancel, handler: { (_) in
+                        self.scannerViewController.buttonReleased()
+                        self.scannerViewController.captureSession.startRunning()
+                    }))
+                    ac.addAction(UIAlertAction(title: "Yes", style: .Default, handler: { (_) in
+                        self.scannedItems.append(returnedItem)
+                        self.showText("Success")
+                        self.scannerViewController.buttonReleased()
+                        self.scannerViewController.captureSession.startRunning()
+                    }))
+                    self.presentViewController(ac, animated: true, completion: nil)
+                } else {
+                    let ac = UIAlertController(title: "Oops!", message: "This barcode has not been registered in our inventory. Please register the barcode first before defrosting it.", preferredStyle: .Alert)
+                    ac.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (_) in
+                        self.scannerViewController.buttonReleased()
+                        self.scannerViewController.captureSession.startRunning()
+                    }))
+                    self.presentViewController(ac, animated: true, completion: nil)
+                }
             }
+        } else {
+            self.showText("Item already scanned")
+            self.scannerViewController.buttonReleased()
+            self.scannerViewController.captureSession.startRunning()
         }
     }
     
     func PopUpArchiveAlert(barcodeText: String, message : String) {
-        parseBackendHandler.lookUpBarcode(barcodeText) { (exists, error, returnedItem) in
-            if exists {
-                self.showText("Item already in database")
-                self.scannerViewController.buttonReleased()
-                self.scannerViewController.captureSession.startRunning()
-            } else if !exists {
-                self.performSegueWithIdentifier("ShowArchivePopover", sender: self)
-                self.scannerViewController.buttonReleased()
-                self.scannerViewController.captureSession.startRunning()
+        if !checkBarcodeIsInScannedList(barcodeText)  {
+            parseBackendHandler.lookUpBarcode(barcodeText) { (exists, error, returnedItem) in
+                if exists {
+                    self.showText("Item already in database")
+                    self.scannerViewController.buttonReleased()
+                    self.scannerViewController.captureSession.startRunning()
+                } else if !exists {
+                    self.performSegueWithIdentifier("ShowArchivePopover", sender: self)
+                    self.scannerViewController.buttonReleased()
+                    self.scannerViewController.captureSession.startRunning()
+                }
             }
+        } else {
+            self.showText("Item already scanned")
+            self.scannerViewController.buttonReleased()
+            self.scannerViewController.captureSession.startRunning()
         }
     }
     

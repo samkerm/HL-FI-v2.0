@@ -455,8 +455,8 @@
                                                     <constraint firstItem="EJj-Iq-DSY" firstAttribute="leading" secondItem="7xA-0V-gud" secondAttribute="leading" constant="8" id="HXZ-8h-5of"/>
                                                     <constraint firstItem="K8q-qV-LHC" firstAttribute="top" secondItem="JLC-gN-HTq" secondAttribute="bottom" constant="5" id="Kvy-qO-lvb"/>
                                                     <constraint firstItem="KvG-0J-dn8" firstAttribute="leading" secondItem="7xA-0V-gud" secondAttribute="leading" constant="8" id="M8m-go-wWm"/>
-                                                    <constraint firstItem="8YH-NX-DLI" firstAttribute="top" secondItem="7xA-0V-gud" secondAttribute="top" constant="8" id="TIz-Kg-eYp"/>
-                                                    <constraint firstItem="KvG-0J-dn8" firstAttribute="top" secondItem="8YH-NX-DLI" secondAttribute="bottom" constant="78" id="YNK-UL-cD9"/>
+                                                    <constraint firstItem="8YH-NX-DLI" firstAttribute="top" secondItem="7xA-0V-gud" secondAttribute="top" id="TIz-Kg-eYp"/>
+                                                    <constraint firstItem="KvG-0J-dn8" firstAttribute="top" secondItem="8YH-NX-DLI" secondAttribute="bottom" constant="75" id="YNK-UL-cD9"/>
                                                     <constraint firstItem="K8q-qV-LHC" firstAttribute="leading" secondItem="7xA-0V-gud" secondAttribute="leading" constant="8" id="Yqc-bv-W8R"/>
                                                     <constraint firstAttribute="trailing" secondItem="lfO-8I-Hrk" secondAttribute="trailing" constant="8" id="a3D-zH-j0P"/>
                                                     <constraint firstItem="lfO-8I-Hrk" firstAttribute="top" secondItem="Hri-nr-672" secondAttribute="bottom" constant="5" id="ckK-d4-JHp"/>
@@ -465,7 +465,7 @@
                                                     <constraint firstAttribute="trailing" secondItem="KvG-0J-dn8" secondAttribute="trailing" constant="8" id="dyJ-BR-kfs"/>
                                                     <constraint firstAttribute="height" constant="290" id="i24-pL-E1N"/>
                                                     <constraint firstItem="40u-8R-e8W" firstAttribute="top" secondItem="Hri-nr-672" secondAttribute="bottom" constant="40" id="k5q-Tb-gFH"/>
-                                                    <constraint firstItem="Hri-nr-672" firstAttribute="top" secondItem="8YH-NX-DLI" secondAttribute="bottom" constant="8" id="n5e-UP-5iN"/>
+                                                    <constraint firstItem="Hri-nr-672" firstAttribute="top" secondItem="8YH-NX-DLI" secondAttribute="bottom" constant="5" id="n5e-UP-5iN"/>
                                                     <constraint firstItem="JLC-gN-HTq" firstAttribute="leading" secondItem="7xA-0V-gud" secondAttribute="leading" constant="8" id="nOO-T3-PCK"/>
                                                     <constraint firstItem="JLC-gN-HTq" firstAttribute="top" secondItem="EJj-Iq-DSY" secondAttribute="bottom" constant="40" id="uFI-1Y-toI"/>
                                                     <constraint firstItem="40u-8R-e8W" firstAttribute="leading" secondItem="7xA-0V-gud" secondAttribute="leading" constant="8" id="wSO-aA-19n"/>
@@ -974,18 +974,18 @@
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="5vR-pH-TgW" id="XAb-fs-jc6">
-                                    <frame key="frameInset" width="342" height="43"/>
+                                    <frame key="frameInset" width="342" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="5tl-Bl-Hyz">
-                                            <frame key="frameInset" minX="15" minY="4" width="34" height="21"/>
+                                            <frame key="frameInset" minX="15" minY="5" width="33.5" height="20.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="qAd-cJ-bn1">
-                                            <frame key="frameInset" minX="15" minY="25" width="33" height="15"/>
+                                            <frame key="frameInset" minX="15" minY="25.5" width="33" height="14.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                             <nil key="textColor"/>
@@ -1039,18 +1039,18 @@
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gxV-b9-7rH" id="ig9-pF-K0g">
-                                    <frame key="frameInset" width="375" height="43"/>
+                                    <frame key="frameInset" width="375" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="RqD-BT-qPA">
-                                            <frame key="frameInset" minX="15" minY="11" width="34" height="21"/>
+                                            <frame key="frameInset" minX="15" minY="12" width="33.5" height="20.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" id="KyS-pK-g6M">
-                                            <frame key="frameInset" minX="316" minY="11" width="44" height="21"/>
+                                            <frame key="frameInset" minX="316" minY="12" width="44" height="20.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
